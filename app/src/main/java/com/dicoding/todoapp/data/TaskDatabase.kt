@@ -17,9 +17,8 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.util.concurrent.Executors
 
-//TODO 3 : Define room database class and prepopulate database using JSON
-
-@Database(version = 2 , entities = [Task::class] , exportSchema = false)
+//TODO 3 : Define room database class and prepopulate database using JSON OK
+@Database(version = 1, entities = [Task::class])
 abstract class TaskDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
@@ -29,25 +28,25 @@ abstract class TaskDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: TaskDatabase? = null
 
+
         fun getInstance(context: Context): TaskDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     TaskDatabase::class.java,
-                    "task.db"
-                )
-                    .fallbackToDestructiveMigration().addCallback(object : Callback(){
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                                Executors.newSingleThreadExecutor().execute{
-                                    INSTANCE?.let {
-                                        CoroutineScope(Dispatchers.IO).launch {
-                                            fillWithStartingData(context, it.taskDao())
-                                        }
-                                    }
+                    "aad.db"
+                ).fallbackToDestructiveMigration().addCallback(object : Callback() {
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        super.onCreate(db)
+                        Executors.newSingleThreadExecutor().execute {
+                            INSTANCE?.let {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    fillWithStartingData(context, it.taskDao())
                                 }
+                            }
                         }
-                    }).build()
+                    }
+                }).build()
                 INSTANCE = instance
                 instance
             }
@@ -93,6 +92,8 @@ abstract class TaskDatabase : RoomDatabase() {
             }
             return null
         }
+
+
 
     }
 }
