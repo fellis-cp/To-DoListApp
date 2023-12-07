@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 //TODO 1 : Define a local database table using the schema in app/schema/tasks.json
 
-@Entity (tableName = "Tasks")
+@Entity (tableName = "Task")
 
-data class Tasks (
+data class Task (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
