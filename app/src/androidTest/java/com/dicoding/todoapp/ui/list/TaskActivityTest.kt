@@ -28,7 +28,7 @@ class TaskActivityTest {
         Espresso.onView(ViewMatchers.withId(R.id.fab))
             .perform(ViewActions.click())
 
-        
+
         Intents.intended(IntentMatchers.hasComponent(AddTaskActivity::class.java.name))
     }
 }
