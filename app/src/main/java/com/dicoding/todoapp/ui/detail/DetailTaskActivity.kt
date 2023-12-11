@@ -50,12 +50,7 @@ class DetailTaskActivity : AppCompatActivity() {
 
         })
 
-
-
-
     }
-
-
 
     private fun getDataTask(taskId: Int) : LiveData<Task> {
         viewModel.setTaskId(taskId)
