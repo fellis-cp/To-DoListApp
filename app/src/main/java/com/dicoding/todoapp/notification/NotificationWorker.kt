@@ -47,14 +47,14 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
         if (preferenceNotification) {
             val nearestTask = TaskRepository.getInstance(context = applicationContext).getNearestActiveTask()
             getPendingIntent(nearestTask)?.let {
-                showNotif(applicationContext, nearestTask, it)
+                showNotification(applicationContext, nearestTask, it)
             }
             Log.d("Nearest Task", nearestTask.title)
         }
         return Result.success()
     }
 
-    private fun showNotif(context: Context, task: Task, pendingIntent: PendingIntent) {
+    private fun showNotification(context: Context, task: Task, pendingIntent: PendingIntent) {
         val channelId = NOTIFICATION_CHANNEL_ID
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val existingChannel = (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
@@ -64,8 +64,8 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
                 val myChannel = NotificationChannel(channelId, "Channel Name", NotificationManager.IMPORTANCE_DEFAULT)
                 myChannel.description = "Task Reminder"
 
-                val notifManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notifManager.createNotificationChannel(myChannel)
+                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.createNotificationChannel(myChannel)
             }
         }
 
