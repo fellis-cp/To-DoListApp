@@ -18,7 +18,7 @@ import java.io.InputStreamReader
 import java.util.concurrent.Executors
 
 //TODO 3 : Define room database class and prepopulate database using JSON OK
-@Database(version = 1, entities = [Task::class])
+@Database(version = 1, entities = [Task::class] , exportSchema = false)
 abstract class TaskDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
@@ -34,7 +34,7 @@ abstract class TaskDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     TaskDatabase::class.java,
-                    "aad.db"
+                    "task.db"
                 ).fallbackToDestructiveMigration().addCallback(object : Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
